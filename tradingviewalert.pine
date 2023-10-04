@@ -1,0 +1,24 @@
+//@version=4
+study("6% Drop Alert", shorttitle="6% Drop Alert", overlay=true)
+
+drop_percentage = input(6, title="Drop Percentage") / 100
+length = input(33, title="Bars")
+
+lowest_price = lowest(close, length)
+trigger = close < lowest_price * (1 - drop_percentage)
+
+plotshape(trigger, style=shape.triangleup, location=location.belowbar, color=color.red)
+
+alertcondition(trigger, title="6% Drop Alert", message="Price dropped 6% within 33 bars!")
+
+
+//@version=5
+indicator("Price Drop Alert", overlay=true)
+
+priceDropPercent = 6
+barsPeriod = 33
+
+priceChange = ta.change(close)
+
+if ta.valuewhen(priceChange < -priceChange * (priceDropPercent / 100), high, barsPeriod) and ta.valuewhen(priceChange < -priceChange * (priceDropPercent / 100), low, barsPeriod)
+    alert("Price dropped by ", priceDropPercent, "% within the last ", barsPeriod, " bars")
