@@ -16,11 +16,11 @@ def index():
 
 @app.route('/execute_trade', methods=['POST'])
 def execute_trade():
-    amount = float(request.form.get('amount'))
+    amount = request.form.get('amount')
     
-    # Here, add logic to buy on BinanceUS using ccxt
-    # ... (as per the previous code)
-    
+    # This example buys Bitcoin for the specified USD amount
+    # Ensure to check other parameters like symbol, type, etc.
+    order = binance.create_market_buy_order('BTC/USD', amount)
     return "Trade executed!"
 
 logging.basicConfig(filename='tradingview_alerts.log', level=logging.INFO)
